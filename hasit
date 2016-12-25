@@ -20,7 +20,7 @@ def sub(args):
         printStatus(args[1])
         return
     if len(args) == 3:
-        update(args[1], args[2], None)
+        update(args[1], args[2])
         return
     update(args[1], args[2], args[3])
 
@@ -28,7 +28,7 @@ def printStatus(sub):
     print 'hasit ' + sub + ' today?'
     print 'yes'
 
-def update(sub, status, password):
+def update(sub, status, password=None):
     if status != 'yes' and status != 'no':
         print 'I can only update ' + sub + ' to yes or no'
         return
