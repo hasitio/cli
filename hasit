@@ -11,12 +11,35 @@ def version(args):
     print app_name + ' version ' + version_string + ' Developed by Ashley Coleman'
 
 def help(args):
-    print app_name + ' - help is wip'
+    print 'hasit {sub} -> get status of sub'
+    print 'hasit {sub} [yes/no] -> update {sub} to [yes/no]'
+    print 'hasit {sub}[yes/no] {password} -> update {sub} to [yes/no] using {password}'
+
+def sub(args):
+    if len(args) == 2:
+        printStatus(args[1])
+        return
+    if len(args) == 3:
+        update(args[1], args[2], None)
+        return
+    update(args[1], args[2], args[3])
+
+def printStatus(sub):
+    print 'hasit ' + sub + ' today?'
+    print 'yes'
+
+def update(sub, status, password):
+    if status != 'yes' and status != 'no':
+        print 'I can only update ' + sub + ' to yes or no'
+        return
+
+    print 'Updating ' + sub + ' to ' + status
+    if password is not None: #tbh I have no idea if that is the right syntax
+        print 'with password ' + password
 
 commandMap = {
     'version': version,
     'help': help,
-
 }
 
 try:
@@ -25,7 +48,10 @@ try:
         sys.exit() # Exit script
 
     commandMap[sys.argv[1]](sys.argv)
-except: # Command not supported
-    print 'Command not recognized'
+except: # Process {sub} command
+    sub(sys.argv)
 
-## hasit {sub}
+## hasit {sub} -> get status of sub
+## hasit {sub} yes -> update {sub} to yes
+## hasit {sub} no -> update {sub} to no
+## hasit {sub}[yes/no] {password} -> update {sub} to [yes/no] with {password} if required
