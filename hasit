@@ -34,7 +34,7 @@ def update(sub, status, password=None):
         return
 
     print 'Updating ' + sub + ' to ' + status
-    if password is not None: #tbh I have no idea if that is the right syntax
+    if password is not None:
         print 'with password ' + password
 
 commandMap = {
