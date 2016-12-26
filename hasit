@@ -4,8 +4,12 @@ import sys
 import os
 from subprocess import call
 
+from api import Api
+
 version_string = '0.0.1'
 app_name = 'hasit'
+
+api = Api()
 
 def version(args):
     print app_name + ' version ' + version_string + ' Developed by Ashley Coleman'
@@ -14,6 +18,7 @@ def help(args):
     print 'hasit {sub} -> get status of sub'
     print 'hasit {sub} [yes/no] -> update {sub} to [yes/no]'
     print 'hasit {sub}[yes/no] {password} -> update {sub} to [yes/no] using {password}'
+    print 'hasit create {sub} -> Create sub named {sub}'
 
 def sub(args):
     if len(args) == 2:
@@ -26,7 +31,7 @@ def sub(args):
 
 def printStatus(sub):
     print 'hasit ' + sub + ' today?'
-    print 'yes'
+    print api.getStatus(sub)
 
 def update(sub, status, password=None):
     if status != 'yes' and status != 'no':
@@ -37,9 +42,19 @@ def update(sub, status, password=None):
     if password is not None:
         print 'with password ' + password
 
+    api.update(sub, status)
+
+def create(args):
+    sub = args[2]
+    if sub == '':
+        print 'Sub name cannot be empty'
+        return
+    print api.create(args[2])
+
 commandMap = {
     'version': version,
     'help': help,
+    'create' : create
 }
 
 try:
